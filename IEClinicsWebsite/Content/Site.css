@@ -20,5 +20,10 @@
 input,
 select,
 textarea {
-    max-width: 280px;
+    background-color: black;
 }
+
+.form-control {
+    border-radius: 0px;
+}
+

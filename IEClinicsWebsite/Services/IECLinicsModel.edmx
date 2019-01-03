@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="IEClinics_Context.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Especialidade">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Descricao" Type="nvarchar(max)" />
+          <Property Name="ValorMarcacao" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Medico">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EspecialidadeID" Type="int" Nullable="false" />
+          <Property Name="Nome" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="DataNascimento" Type="datetime" Nullable="false" />
+          <Property Name="Sexo" Type="int" Nullable="false" />
+          <Property Name="Pais" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Provincia" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Endereco" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Telefone" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="TelefoneAlternativo" Type="nvarchar(max)" />
+          <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="GrupoSanguineo" Type="nvarchar(max)" />
+        </EntityType>
+        <Association Name="FK_dbo_Medico_dbo_Especialidade_EspecialidadeID">
+          <End Role="Especialidade" Type="Self.Especialidade" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Medico" Type="Self.Medico" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Especialidade">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Medico">
+              <PropertyRef Name="EspecialidadeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="IEClinics_ContextStoreContainer">
+          <EntitySet Name="Especialidade" EntityType="Self.Especialidade" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Medico" EntityType="Self.Medico" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_Medico_dbo_Especialidade_EspecialidadeID" Association="Self.FK_dbo_Medico_dbo_Especialidade_EspecialidadeID">
+            <End Role="Especialidade" EntitySet="Especialidade" />
+            <End Role="Medico" EntitySet="Medico" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="IEClinics_Context" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Especialidade">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Descricao" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ValorMarcacao" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Medico" Relationship="Self.FK_dbo_Medico_dbo_Especialidade_EspecialidadeID" FromRole="Especialidade" ToRole="Medico" />
+        </EntityType>
+        <EntityType Name="Medico">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EspecialidadeID" Type="Int32" Nullable="false" />
+          <Property Name="Nome" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DataNascimento" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Sexo" Type="Int32" Nullable="false" />
+          <Property Name="Pais" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Provincia" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Endereco" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Telefone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TelefoneAlternativo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="GrupoSanguineo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Especialidade" Relationship="Self.FK_dbo_Medico_dbo_Especialidade_EspecialidadeID" FromRole="Medico" ToRole="Especialidade" />
+        </EntityType>
+        <Association Name="FK_dbo_Medico_dbo_Especialidade_EspecialidadeID">
+          <End Role="Especialidade" Type="Self.Especialidade" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Medico" Type="Self.Medico" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Especialidade">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Medico">
+              <PropertyRef Name="EspecialidadeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ichostwe_ieclinicsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Especialidade" EntityType="Self.Especialidade" />
+          <EntitySet Name="Medico" EntityType="Self.Medico" />
+          <AssociationSet Name="FK_dbo_Medico_dbo_Especialidade_EspecialidadeID" Association="Self.FK_dbo_Medico_dbo_Especialidade_EspecialidadeID">
+            <End Role="Especialidade" EntitySet="Especialidade" />
+            <End Role="Medico" EntitySet="Medico" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="IEClinics_ContextStoreContainer" CdmEntityContainer="ichostwe_ieclinicsEntities">
+          <EntitySetMapping Name="Especialidade">
+            <EntityTypeMapping TypeName="IEClinics_Context.Especialidade">
+              <MappingFragment StoreEntitySet="Especialidade">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="ValorMarcacao" ColumnName="ValorMarcacao" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Medico">
+            <EntityTypeMapping TypeName="IEClinics_Context.Medico">
+              <MappingFragment StoreEntitySet="Medico">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="EspecialidadeID" ColumnName="EspecialidadeID" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="DataNascimento" ColumnName="DataNascimento" />
+                <ScalarProperty Name="Sexo" ColumnName="Sexo" />
+                <ScalarProperty Name="Pais" ColumnName="Pais" />
+                <ScalarProperty Name="Provincia" ColumnName="Provincia" />
+                <ScalarProperty Name="Endereco" ColumnName="Endereco" />
+                <ScalarProperty Name="Telefone" ColumnName="Telefone" />
+                <ScalarProperty Name="TelefoneAlternativo" ColumnName="TelefoneAlternativo" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="GrupoSanguineo" ColumnName="GrupoSanguineo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

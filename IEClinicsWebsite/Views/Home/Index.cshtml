@@ -1,31 +1,154 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@model IEClinicsWebsite.Models.Marcacao
+@{
+    ViewBag.Title = "Efectuar marcação";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+<div class="row">
+    <div class="col-md-12">
+        <h4 class="text-center text-success">@ViewBag.Mensagem</h4>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        @using (Html.BeginForm("", "", FormMethod.Post, new { @id = "form_sample_1", @class = "" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-body">
+                <div class="row form-group">
+                    <div class="col-sm-6">
+                        <label class="control-label col-md-12">
+                            Especialidade
+                            <span class="required"> * </span>
+                        </label>
+                        <div class="col-md-12">
+                            <select name="Especialidade" class="form-control" id="especialidades">
+                                @foreach (var especialidade in ViewBag.Especialidades)
+                                {
+                                    <option value="@especialidade.Nome">@especialidade.Nome</option>
+                                }
+                            </select>
+                            @Html.ValidationMessageFor(model => model.Especialidade)
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="control-label col-md-12">
+                            Médicos
+                            <span class="required"> * </span>
+                        </label>
+                        <div class="col-md-12">
+                            <select name="Medico" class="form-control" id="medicos">
+                                @foreach (var medico in ViewBag.Medicos)
+                                {
+                                    <option data-especialidade="@medico.Especialidade.Nome" value="@medico.Nome">@medico.Nome</option>
+                                }
+                            </select>
+                            @Html.ValidationMessageFor(model => model.Medico)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col-md-12">
+                        <label class="control-label col-md-12">
+                            Nome do utente
+                            <span class="required"> * </span>
+                        </label>
+                        <div class="col-md-12">
+                            @Html.TextBoxFor(model => model.Paciente, new { @placeholder = "Nome do utente", @class = "form-control input-height" })
+                            @Html.ValidationMessageFor(model => model.Paciente)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col-sm-6">
+                        <label class="control-label col-md-12">
+                            Data de nascimento
+                            <span class="required"> * </span>
+                        </label>
+                        <div class="col-md-12">
+                            @Html.TextBoxFor(model => model.DataNascimento, new { @placeholder = "Data de nascimento", @class = "form-control input-height", type = "date" })
+                            @Html.ValidationMessageFor(model => model.DataNascimento)
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="control-label col-md-12">
+                            Data da consulta
+                            <span class="required"> * </span>
+                        </label>
+                        <div class="col-md-12">
+                            @Html.TextBoxFor(model => model.DataConsulta, new { @placeholder = "Data da consulta", @class = "form-control input-height", type = "date" })
+                            @Html.ValidationMessageFor(model => model.DataConsulta)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col-sm-6">
+                        <label class="control-label col-md-12">
+                            Hora da marcação
+                            <span class="required"> * </span>
+                        </label>
+                        <div class="col-md-12">
+                            <select class="form-control" name="HoraMarcacao" id="hora">
+                                <option value="08:00">08:00 - 08:45</option>
+                                <option value="09:00">09:00 - 09:45</option>
+                                <option value="10:00">10:00 - 10:45</option>
+                                <option value="11:00">11:00 - 11:45</option>
+                                <option value="12:00">12:00 - 12:45</option>
+                                <option value="13:00">13:00 - 13:45</option>
+                                <option value="14:00">14:00 - 14:45</option>
+                                <option value="15:00">15:00 - 15:45</option>
+                                <option value="16:00">16:00 - 16:45</option>
+                                <option value="17:00">17:00 - 17:45</option>
+                            </select>
+                            @Html.ValidationMessageFor(model => model.HoraMarcacao)
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="control-label col-md-12">
+                            Telefone
+                            <span class="required"> * </span>
+                        </label>
+                        <div class="col-md-12">
+                            @Html.TextBoxFor(model => model.Telefone, new { @placeholder = "Telefone", @class = "form-control input-height" })
+                            @Html.ValidationMessageFor(model => model.Telefone)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-md-12">
+                        <label class="control-label col-md-12">
+                            Email de contacto
+                            <span class="required"> * </span>
+                        </label>
+                        <div class="col-md-12">
+                            @Html.TextBoxFor(model => model.Email, new { @placeholder = "Email", @class = "form-control input-height" })
+                            @Html.ValidationMessageFor(model => model.Email)
+                        </div>
+                    </div>
+                </div>
+                <div class="row">   
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-info center-block">Efectuar pedido de marcação</button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+@section scripts {
+    <script type="text/javascript">
+        var medicos = $('#medicos option');
+        $('#especialidades').on('change', function () {
+            var Especialidade = this.value;
+            var novoSelect = medicos.filter(function () {
+                return $(this).data('especialidade') == Especialidade;
+            });
+            $('#medicos').html(novoSelect);
+        });
+    </script>
+}
