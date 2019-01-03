@@ -27,3 +27,6 @@ textarea {
     border-radius: 0px;
 }
 
+#verFicha {
+    display: none;
+}

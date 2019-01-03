@@ -1,0 +1,85 @@
+﻿@model IEClinicsWebsite.Models.Marcacao
+
+@{
+    ViewBag.Title = "Encontrar médico";
+}
+
+@using (Html.BeginForm("EncontrarMedico", "Home", FormMethod.Post, new { @id = "form_sample_1", @class = "" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-body">
+        <div class="row form-group">
+            <div class="col-sm-6">
+                <label class="control-label col-md-12">
+                    Especialidade
+                    <span class="required"> * </span>
+                </label>
+                <div class="col-md-12">
+                    <select name="Especialidade" class="form-control" id="especialidades">
+                        <option value="Especialidade">Seleccionar especialidade</option>
+                        @foreach (var especialidade in ViewBag.Especialidades)
+                        {
+                            <option value="@especialidade.Nome">@especialidade.Nome</option>
+                        }
+                    </select>
+                    @Html.ValidationMessageFor(model => model.Especialidade)
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <label class="control-label col-md-12">
+                    Médicos
+                    <span class="required"> * </span>
+                </label>
+                <div class="col-md-12">
+                    <select name="ID" class="form-control" id="medicos">
+                        <option value="Qualquer">Qualquer médico</option>
+                        @foreach (var medico in ViewBag.Medicos)
+                        {
+                            <option data-especialidade="@medico.Especialidade.Nome" value="@medico.ID">@medico.Nome</option>
+                        }
+                    </select>
+                    @Html.ValidationMessageFor(model => model.Medico)
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <button type="submit" class="btn btn-success center-block" id="verFicha">Ver ficha</button>
+        </div>
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-12">
+            @if (ViewBag.Medico != null)
+            {
+                <p>Nome</p>
+                <h4>@ViewBag.Medico.Nome</h4>
+                <p>Especialidade</p>
+                <h4>@ViewBag.Medico.Especialidade.Nome</h4>
+                <p>País</p>
+                <h4>@ViewBag.Medico.Pais</h4>
+                <p>Província / Estado</p>
+                <h4>@ViewBag.Medico.Provincia</h4>
+                <p>Data de nascimento</p>
+                <h4>@ViewBag.Medico.DataNascimento.ToShortDateString()</h4>
+                <p></p>
+            }
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script type="text/javascript">var medicos = $('#medicos option');
+        $('#especialidades').on('change', function () {
+            var Especialidade = this.value;
+            var novoSelect = medicos.filter(function () {
+                return $(this).data('especialidade') == Especialidade;
+            });
+            $('#medicos').html(novoSelect);
+            $('#verFicha').css('display', "block");
+        });</script>
+}

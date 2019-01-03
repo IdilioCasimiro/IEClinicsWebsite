@@ -1,11 +1,8 @@
 ﻿using IEClinicsWebsite.Models;
 using IEClinicsWebsite.Services;
-using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 
 namespace IEClinicsWebsite.Controllers
@@ -40,10 +37,26 @@ namespace IEClinicsWebsite.Controllers
             return View();
         }
 
-        public ActionResult About()
+        public async Task<ActionResult> EncontrarMedico()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Especialidades = await context.Especialidade.ToListAsync();
+            ViewBag.Medicos = await context.Medico.ToListAsync();
+            return View();
+        }
 
+        [HttpPost]
+        public async Task<ActionResult> EncontrarMedico(int? id)
+        {
+            ViewBag.Especialidades = await context.Especialidade.ToListAsync();
+            ViewBag.Medicos = await context.Medico.ToListAsync();
+
+            if (id == null)
+                return View();
+
+            var medico = await context.Medico.FindAsync(id);
+            if (medico != null)
+                ViewBag.Medico = medico;
+                
             return View();
         }
 

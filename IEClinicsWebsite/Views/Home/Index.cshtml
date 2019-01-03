@@ -23,6 +23,7 @@
                         </label>
                         <div class="col-md-12">
                             <select name="Especialidade" class="form-control" id="especialidades">
+                                <option value="Especialidade">Seleccionar especialidade</option>
                                 @foreach (var especialidade in ViewBag.Especialidades)
                                 {
                                     <option value="@especialidade.Nome">@especialidade.Nome</option>
@@ -38,6 +39,7 @@
                         </label>
                         <div class="col-md-12">
                             <select name="Medico" class="form-control" id="medicos">
+                                <option value="Qualquer">Qualquer médico</option>
                                 @foreach (var medico in ViewBag.Medicos)
                                 {
                                     <option data-especialidade="@medico.Especialidade.Nome" value="@medico.Nome">@medico.Nome</option>
